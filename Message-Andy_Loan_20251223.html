@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Message to Andy</title>
+
+<style>
+  body {
+    margin: 0;
+    padding: 40px 25px;
+    background:
+      radial-gradient(circle at 20% -10%, rgba(255,120,160,0.22), transparent 60%),
+      radial-gradient(circle at 80% 110%, rgba(255,165,195,0.18), transparent 65%),
+      #0b0b0b;
+    color: #ffffff;
+    font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+overflow-y: auto;
+scroll-behavior: smooth;
+    position: relative;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.55) 100%);
+    z-index: 1;
+  }
+
+  h1 {
+    font-weight: 300;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    z-index: 3;
+  }
+
+  .typewriter {
+    font-size: 1.42rem;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    min-height: 210px;
+    width: 100%;
+    max-width: 650px;
+    opacity: 0;
+    animation: fadeIn 1.2s ease forwards;
+    z-index: 3;
+    text-shadow: 0 0 12px rgba(255,180,200,0.2);
+  }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .btn {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.22);
+    color: white;
+    padding: 14px 34px;
+    cursor: pointer;
+    font-size: 1.06rem;
+    border-radius: 10px;
+    transition: 0.35s;
+    margin-top: 28px;
+    backdrop-filter: blur(6px);
+    z-index: 3;
+  }
+
+  .btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-2px);
+  }
+
+  footer {
+    margin-top: 60px;
+    font-size: 0.82rem;
+    opacity: 0.65;
+    z-index: 3;
+  }
+
+  .particle {
+    position: absolute;
+    top: -20px;
+    background: rgba(255,150,170,0.78);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(255,150,170,0.9);
+    animation: floatUp linear infinite;
+    opacity: 0.75;
+    z-index: 2;
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(0) scale(1); opacity: 0.85; }
+    to { transform: translateY(-120vh) scale(1.7); opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<h1>To Andy...</h1>
+
+<div id="typewriter" class="typewriter"></div>
+
+<button class="btn" id="playBtn">播放讯息</button>
+
+<footer>This is an Request for Help message</footer>
+
+<script>
+  const playBtn = document.getElementById("playBtn");
+
+  function typeWriter(text, speed = 55) {
+    const el = document.getElementById("typewriter");
+    el.innerHTML = "";
+    let i = 0;
+
+    function typing() {
+      if (i < text.length) {
+        el.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+      }
+    }
+    typing();
+  }
+
+ function speakText(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "zh-CN";
+    utterance.rate = 0.92; // smoother, slower voice
+    utterance.pitch = 1.1;
+    speechSynthesis.cancel(); 
+    speechSynthesis.speak(utterance);
+}
+
+function startMessage() {
+    const message =
+`Good Morning Bro Andy
+Christmax is coming,
+Here I would like to give you advance greeting on this special and lovely day of Jesus
+Wishes you have good health always and have a prosper life ahead
+And your dream come true
+Stay strong and well。
+
+Here, I hope you can help me $2000. I will pay back $2600 on 2nd January 2026
+Thanks alot.
+Have a nice day
+
+This way and mode of messaging is a special and One and Only one which no other people do this before.`;
+
+    typeWriter(message, 180); // SLOWER WRITE SPEED
+    speakText(message);
+
+    playBtn.disabled = true;
+    playBtn.innerText = "Messages is playing...";
+}
+
+  playBtn.addEventListener("click", startMessage);
+
+  function createParticles() {
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement("div");
+      p.classList.add("particle");
+      const size = Math.random() * 7 + 5;
+      p.style.width = p.style.height = size + "px";
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.animationDuration = Math.random() * 10 + 12 + "s";
+      p.style.animationDelay = Math.random() * 6 + "s";
+      document.body.appendChild(p);
+    }
+  }
+
+  createParticles();
+</script>
+
+</body>
+</html>
